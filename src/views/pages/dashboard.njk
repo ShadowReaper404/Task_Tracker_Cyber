@@ -1,0 +1,41 @@
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<h1 class="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Total Projects</h3>
+    <p class="text-3xl font-bold text-gray-900 mt-2">{{ stats.totalProjects }}</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Total Tasks</h3>
+    <p class="text-3xl font-bold text-gray-900 mt-2">{{ stats.totalTasks }}</p>
+  </div>
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Completed</h3>
+    <p class="text-3xl font-bold text-green-600 mt-2">{{ stats.completedTasks }}</p>
+  </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md p-6">
+  <h2 class="text-xl font-bold text-gray-900 mb-4">Recent Projects</h2>
+  {% if recentProjects.length > 0 %}
+    <div class="space-y-3">
+    {% for project in recentProjects %}
+      <a href="/projects/{{ project.id }}" class="block p-4 border rounded-lg hover:border-indigo-400 hover:shadow transition">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="font-semibold text-gray-900">{{ project.name }}</h3>
+            <p class="text-sm text-gray-500">{{ project._count.tasks }} task(s)</p>
+          </div>
+          <span class="text-indigo-600 text-sm font-medium">View &rarr;</span>
+        </div>
+      </a>
+    {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-500">No projects yet. <a href="/projects/new" class="text-indigo-600 hover:underline">Create your first project</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}
